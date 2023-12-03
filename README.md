@@ -1,4 +1,4 @@
-![Alt Text](/src/lib/assets/preview.png)
+![Alt Text](src/lib/assets/preview.png)
 
 Divinix - Seamless Educational Integration for Digital Learners
 
