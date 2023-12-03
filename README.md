@@ -8,4 +8,4 @@ Whether you're creating a digital textbook, an interactive study guide, or a mul
 
 🎓 Efficiency Amplified: Boost productivity with EduInteract's intuitive interface and efficient content organization. Seamlessly arrange chapters, embed multimedia, and structure your educational concepts for an optimal learning journey.
 
-
+Not 🛠️ production 🛠️ ready !
