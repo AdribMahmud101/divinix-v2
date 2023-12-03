@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <filter id="invert-filter-0" color-interpolation-filters="sRGB" x="-50%" y="-50%" width="200%" height="200%" bx:preset="invert 1 1">
+      <feComponentTransfer>
+        <feFuncR type="table" tableValues="1 0"/>
+        <feFuncG type="table" tableValues="1 0"/>
+        <feFuncB type="table" tableValues="1 0"/>
+      </feComponentTransfer>
+    </filter>
+    <filter id="brightness-filter-0" color-interpolation-filters="sRGB" x="-50%" y="-50%" width="200%" height="200%" bx:preset="brightness 1 0.99">
+      <feComponentTransfer>
+        <feFuncR type="linear" slope="0.99"/>
+        <feFuncG type="linear" slope="0.99"/>
+        <feFuncB type="linear" slope="0.99"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+  <path d="M71.8548 137.903C81.4025 111.71 90.1439 99.1995 116.371 83.7097C83.4124 90.9285 74.4963 106.783 71.8548 137.903Z" fill="#0B0B0B" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M71.494 167.024C65.122 119.815 103.503 79.7654 144.267 75.911L133.374 93.993C113.91 99.9035 99.6263 108.089 89.5056 120.64C80.2778 132.084 74.5874 147.063 71.494 167.024Z" stroke="#1A1A1A" stroke-width="2" stroke-miterlimit="1.41477" stroke-linejoin="bevel" fill="#0B0B0B" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M112.984 103.065C93.8152 118.252 84.2917 143.956 88.6472 168.147L76.8427 189.46C73.9419 184.112 72.8483 180.728 71.8548 173.529C75.0186 131.446 92.9612 113.621 112.984 103.065Z" fill="#0B0B0B" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M150 69.4355L157.258 56.6129C123.306 59.0253 108.763 65.4793 91.9355 87.3387C115.226 72.8565 127.844 70.0981 150 69.4355Z" fill="#0B0B0B" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M208.79 57.5807H162.823L53.2258 241.452H130.403C119.239 237.438 113.59 234.559 104.758 228.145L174.919 111.381V137.737H173.71V173.226L200.081 215.323L155.806 215.081C135.906 212.158 135.821 205.663 133.306 191.855L112.742 226.21C130.429 236.824 141.048 237.823 163.065 241.452C185.081 245.081 247.016 241.452 247.016 241.452L208.79 186.29V57.5807Z" fill="#0B0B0B" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M175.403 138.161H175.903V137.661V111.306H184.581V172.726H174.452V138.161H175.403Z" stroke="#181818" fill="#0F0F0F" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M180.284 106.459L180.226 106.569V106.694V110.564V111.064H180.726H184.747V173.226V173.726H185.247H195.242H195.742V173.226V79.3548L194.8 79.1203L180.284 106.459Z" stroke="#1C1C1C" fill="#151515" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M185.81 173.436L185.662 173.21H185.392H174.435H173.524L174.014 173.979L200.553 215.591L200.7 215.823H200.974H212.661H213.587L213.079 215.049L185.81 173.436Z" stroke="#262626" fill="#0F0F0F" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M212.661 181.21C220.922 164.966 224.571 140.053 215.323 95.3226C245.462 145.551 242.022 167.156 227.177 201.774L212.661 181.21Z" fill="#0B0B0B" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M175.887 138.387H173.952V112.64L175.887 110.323V138.387Z" fill="#1D1D1D" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <circle cx="150" cy="150" r="144" stroke="#070707" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M208.79 57.5807H162.823L53.2258 241.452H130.403C119.239 237.438 113.59 234.559 104.758 228.145L174.919 111.381V137.737H173.71V173.226L200.081 215.323L155.806 215.081C135.906 212.158 135.821 205.663 133.306 191.855L112.742 226.21C130.429 236.824 141.048 237.823 163.065 241.452C185.081 245.081 247.016 241.452 247.016 241.452L208.79 186.29V57.5807Z" fill="#0B0B0B" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M175.403 138.161H175.903V137.661V111.306H184.581V172.726H174.452V138.161H175.403Z" stroke="#181818" fill="#0F0F0F" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M180.284 106.459L180.226 106.569V106.694V110.564V111.064H180.726H184.747V173.226V173.726H185.247H195.242H195.742V173.226V79.3548L194.8 79.1203L180.284 106.459Z" stroke="#1C1C1C" fill="#151515" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M185.81 173.436L185.662 173.21H185.392H174.435H173.524L174.014 173.979L200.553 215.591L200.7 215.823H200.974H212.661H213.587L213.079 215.049L185.81 173.436Z" stroke="#262626" fill="#0F0F0F" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M175.887 138.387H173.952V112.64L175.887 110.323V138.387Z" fill="#1D1D1D" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M212.661 181.21C220.922 164.966 224.571 140.053 215.323 95.3226C245.462 145.551 242.022 167.156 227.177 201.774L212.661 181.21Z" fill="#0B0B0B" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M150 69.4355L157.258 56.6129C123.306 59.0253 108.763 65.4793 91.9355 87.3387C115.226 72.8565 127.844 70.0981 150 69.4355Z" fill="#0B0B0B" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M71.8548 137.903C81.4025 111.71 90.1439 99.1995 116.371 83.7097C83.4124 90.9285 74.4963 106.783 71.8548 137.903Z" fill="#0B0B0B" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M71.4939 167.024C65.1219 119.815 103.503 79.7654 144.267 75.911L133.374 93.993C113.91 99.9035 99.6263 108.089 89.5056 120.64C80.2778 132.084 74.5874 147.063 71.4939 167.024Z" stroke="#1A1A1A" stroke-width="2" stroke-miterlimit="1.41477" stroke-linejoin="bevel" fill="#0B0B0B" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <path d="M112.984 103.065C93.8152 118.252 84.2917 143.956 88.6472 168.147L76.8427 189.46C73.9419 184.112 72.8483 180.728 71.8548 173.529C75.0186 131.446 92.9612 113.621 112.984 103.065Z" fill="#0B0B0B" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+  <circle cx="150" cy="150" r="144" stroke="#070707" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.53; mix-blend-mode: multiply; filter: url('#invert-filter-0') url('#brightness-filter-0');"/>
+</svg>

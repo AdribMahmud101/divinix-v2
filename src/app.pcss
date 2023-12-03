@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+ 
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+ 
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+ 
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+ 
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+ 
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+ 
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+ 
+    --destructive: 0 72.2% 50.6%;
+    --destructive-foreground: 0 0% 98%;
+ 
+    --ring: 0 0% 3.9%;
+ 
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+ 
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+ 
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+ 
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+ 
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+ 
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+ 
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+ 
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+ 
+    --ring: 0 0% 83.1%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+
+
+/* fonts */
+
+
+@font-face {
+	/* Reference name */
+	font-family: 'Poppins';
+	/* For multiple files use commas, ex: url(), url(), ... */
+	src: url('/fonts/Poppins-Regular.ttf');
+}
+
+@font-face {
+	/* Reference name */
+	font-family: 'Rubik';
+	/* For multiple files use commas, ex: url(), url(), ... */
+	src: url('/fonts/Rubik-Regular.ttf');
+}
+
+
+
+html,
+body { @apply dark:bg-[#000000] min-h-screen bg-[#ffffff] font-[Poppins] text-neutral-700 dark:text-neutral-500}
+
+.divinix{@apply text-5xl text-emerald-500 font-medium font-[Rubik]}
+
+
+
+@keyframes borderAnimation {
+    0% {
+      border-color: transparent;
+      filter: blur(0);
+      box-shadow: 0 0 0 rgba(16, 185, 129, 0);
+    }
+    50% {
+      
+      border-color: #10B981; /* Emerald color */
+      filter: blur(0.7px); /* Adjust the blur value as needed */
+      @apply shadow-2xl shadow-[0_0px_25px] shadow-emerald-500;
+
+       /* Adjust the glow color and size as needed */
+    }
+    100% {
+      border-color: transparent;
+      filter: blur(0);
+      box-shadow: 0 0 0 rgba(16, 185, 129, 0);
+    }
+  }
+  
+  .logo {
+    @apply w-44 lg:w-56 rounded-full;
+    animation: borderAnimation 2s infinite;
+     /* Adjust the blur value as needed */
+     
+    
+     /* Adjust the glow color and size as needed */
+  }
+  
