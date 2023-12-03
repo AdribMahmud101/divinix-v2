@@ -1,4 +1,4 @@
-![Alt Text](src/lib/assets/preview.png)
+<img src="src/lib/assets/preview.png" alt="GitHub Logo" style="border-radius: 8px;">
 
 Divinix - Seamless Educational Integration for Digital Learners
 
