@@ -1,4 +1,4 @@
-<img src="src/lib/assets/preview.png" alt="GitHub Logo" style="border-radius: 8px;">
+<img src="src/lib/assets/preview.png" alt="GitHub Logo" style="border-radius: 20px;">
 
 Divinix - Seamless Educational Integration for Digital Learners
 
