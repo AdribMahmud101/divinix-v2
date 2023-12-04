@@ -1,12 +1,252 @@
+
 <script lang="ts">
+  import {
+    createTable,
+    Subscribe,
+    Render,
+    createRender
+  } from "svelte-headless-table";
+  import {
+    addSortBy,
+    addPagination,
+    addTableFilter,
+    addSelectedRows,
+    addHiddenColumns
+  } from "svelte-headless-table/plugins";
+  import { readable } from "svelte/store";
+  import * as Table from "$lib/components/ui/table";
+  import { Button } from "$lib/components/ui/button";
+  import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
+  import { cn } from "$lib/utils";
+  import { Input } from "$lib/components/ui/input";
+  import DataTableCheckbox from "./data-table-checkbox.svelte";
+  import { ArrowUpDown, ChevronDown } from "lucide-svelte";
+
+  type Subject = {
+    id: string
+    basic_science_subjects: string;
+    applied_science_subjects: string;
+    social_science_subjects: string;
+  };
+
+  const data: Subject[] = [
+    {
+      id: "1",
+      basic_science_subjects: "Math",
+      applied_science_subjects: "Computer Science",
+      social_science_subjects: "Finance",
+    },
+    {
+      id: "2",
+      basic_science_subjects: "Physics",
+      applied_science_subjects: "CDE",
+      social_science_subjects: "Econ",
+    },
+    {
+      id: "3",
+      basic_science_subjects: "Chemistry",
+      applied_science_subjects: "FDH",
+      social_science_subjects: "Economics",
+    },
+  ];
+
+  const table = createTable(readable(data), {
+    sort: addSortBy({ disableMultiSort: true }),
+    page: addPagination(),
+    filter: addTableFilter({
+      fn: ({ filterValue, value }: { filterValue: string, value: string }) =>
+        value.toLowerCase().includes(filterValue.toLowerCase()),
+    }),
+    select: addSelectedRows(),
+    hide: addHiddenColumns(),
+  });
+
+  const columns = table.createColumns([
+    table.column({
+      header: "Basic Science",
+      accessor: "basic_science_subjects",
+      cell: ({ value }: { value: string }) => value.toLowerCase(),
+      plugins: {
+        filter: {
+          getFilterValue(value: string) {
+            return value.toLowerCase();
+          },
+        },
+      },
+    }),
+
+    table.column({
+      header: "Applied Science",
+      accessor: "applied_science_subjects",
+      cell: ({ value }: { value: string }) => value.toLowerCase(),
+      plugins: {
+        filter: {
+          getFilterValue(value: string) {
+            return value.toLowerCase();
+          },
+        },
+      },
+    }),
+    table.column({
+      header: "Social Science",
+      accessor: "social_science_subjects",
+      cell: ({ value }: { value: string }) => value.toLowerCase(),
+      plugins: {
+        filter: {
+          getFilterValue(value: string) {
+            return value.toLowerCase();
+          },
+        },
+      },
+    }),
+  ]);
+
+  const {
+    headerRows,
+    pageRows,
+    tableAttrs,
+    tableBodyAttrs,
+    flatColumns,
+    pluginStates,
+    rows
+  } = table.createViewModel(columns);
+
+  const { sortKeys } = pluginStates.sort;
+
+  const { hiddenColumnIds } = pluginStates.hide;
+  const ids = flatColumns.map((c: { id: any }) => c.id);
+  let hideForId = Object.fromEntries(ids.map((id: any) => [id, true]));
+
+  $: $hiddenColumnIds = Object.entries(hideForId)
+    .filter(([, hide]) => !hide)
+    .map(([id]) => id);
+
+  const { hasNextPage, hasPreviousPage, pageIndex } = pluginStates.page;
+  const { filterValue } = pluginStates.filter;
+
+  const { selectedDataIds } = pluginStates.select;
+
+  const hideableCols = ["basic_science_subjects", "applied_science_subjects", "social_science_subjects"];
 
 </script>
 
-<main>
-    <div class="flex justify-center items-center h-screen">
-        <p class="text-5xl font-bold">Math</p>
-    </div>
+<main class="font-[Rubik]">
+  <div class="flex w-auto justify-center items-center min-h-[90vh]">
+    <div class="min-w-[220px] w-[580px] md:w-[70%] mx-3 sm:mx-8">
+        <div class="flex gap-2 items-center justify-center"><div class="text-xs sm:text-sm text-neutral-400">Choose major subject <span class="hidden sm:inline">from the list</span> or </div> <Button variant='outline' class='sm:text-sm  text-indigo-500 text-xs'> Organize <span class="hidden sm:inline px-1"> your </span> custom Knowledge base</Button></div>
+        <hr class="my-5 border-[1.05px]">
+        
+      <div class="flex items-center justify-center py-4">
+        
+        <Input
+          class="sm:max-w-sm mr-3 text-[10px] xs:text-[12px]  sm:text-sm md:text-[15px]"
+          placeholder="search your subject here"
+          type="text"
+          bind:value={$filterValue}
+        />
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger asChild let:builder>
+            <Button variant="outline" class="ml-auto w-min text-[10px] xs:text-[12px] sm:text-sm md:text-[15px]" builders={[builder]}>
+              Category <ChevronDown class="ml-2 h-4 w-4" />
+            </Button>
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content>
+            {#each flatColumns as col}
+              {#if hideableCols.includes(col.id)}
+                <DropdownMenu.CheckboxItem bind:checked={hideForId[col.id]}>
+                  {col.header}
+                </DropdownMenu.CheckboxItem>
+              {/if}
+            {/each}
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
+      </div>
+      <div class="rounded-md border">
+        <Table.Root {...$tableAttrs} class='text-center text-[10px] xs:text-[12px]  sm:text-sm md:text-[15px]'>
+          <Table.Header>
+            {#each $headerRows as headerRow}
+              <Subscribe rowAttrs={headerRow.attrs()}>
+                <Table.Row>
+                  {#each headerRow.cells as cell (cell.id)}
+                    <Subscribe
+                      attrs={cell.attrs()}
+                      let:attrs
+                      props={cell.props()}
+                      let:props
+                    >
+                      <Table.Head
+                        {...attrs}
+                        class={cn("[&:has([role=checkbox])]:pl-3")}
+                      >
+                        {#if cell.id === "basic_science_subjects"}
+                          <div class="text-center font-medium text-emerald-500">
+                            <Render of={cell.render()} />
+                          </div>
 
-    
+
+                          {:else if cell.id === "applied_science_subjects text-emerald-500"}
+                          <div class="text-center font-medium">
+                              <Render of={cell.render()} />
+                            </div>
+                        {:else}
+                        <div class="text-center font-medium text-emerald-500">
+                          <Render of={cell.render()} />
+                        </div>
+                        {/if}
+                      </Table.Head>
+                    </Subscribe>
+                  {/each}
+                </Table.Row>
+              </Subscribe>
+            {/each}
+          </Table.Header>
+          <Table.Body {...$tableBodyAttrs}>
+            {#each $pageRows as row (row.id)}
+              <Subscribe rowAttrs={row.attrs()} let:rowAttrs>
+                <Table.Row
+                  {...rowAttrs}
+                  data-state={$selectedDataIds[row.id] && "selected"}
+                >
+                  {#each row.cells as cell (cell.id)}
+                    <Subscribe attrs={cell.attrs()} let:attrs>
+                      <Table.Cell class="[&:has([role=checkbox])]:pl-3" {...attrs}>
+                        {#if cell.id === "amount"}
+                          <div class="text-right font-medium">
+                            <Render of={cell.render()} />
+                          </div>
+                        {:else if cell.id === "status"}
+
+
+                          <div class="capitalize">
+                            <Render of={cell.render()} />
+                          </div>
+                        {:else}
+                          <Render of={cell.render()} />
+                        {/if}
+                      </Table.Cell>
+                    </Subscribe>
+                  {/each}
+                </Table.Row>
+              </Subscribe>
+            {/each}
+          </Table.Body>
+        </Table.Root>
+      </div>
+      <div class="flex items-center justify-end space-x-2 py-4">
+
+        <Button
+          variant="outline"
+          size="sm"
+          on:click={() => ($pageIndex = $pageIndex - 1)}
+          disabled={!$hasPreviousPage}>Previous</Button
+        >
+        <Button
+          variant="outline"
+          size="sm"
+          disabled={!$hasNextPage}
+          on:click={() => ($pageIndex = $pageIndex + 1)}>Next</Button
+        >
+      </div>
+    </div>
+  </div>
 </main>
-=

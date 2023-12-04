@@ -1,16 +1,12 @@
 <script lang="ts">
-    import { Button } from "$lib/components/ui/button";
     import * as Dialog from "$lib/components/ui/dialog";
     import { Input } from "$lib/components/ui/input";
-    import { Label } from "$lib/components/ui/label";
-
+    
     import { Search } from "lucide-svelte";
 
     import SearchboxSmallerScreen from "./searchbox-smaller-screen.svelte";
 
-    import { Icon, MagnifyingGlass } from "svelte-hero-icons";
-
-</script>
+    </script>
 
 <Dialog.Root>
     <div class="sm:flex items-center hidden">
