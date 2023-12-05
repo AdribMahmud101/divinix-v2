@@ -27,7 +27,7 @@
           > - Adrib Mahmud
         </p>
 
-        <Button variant="outline"><a href="subjects">Get Started</a></Button>
+        <a href="subjects"> <Button variant="outline">Get Started</Button></a>
       </div>
     </div>
   </div>
