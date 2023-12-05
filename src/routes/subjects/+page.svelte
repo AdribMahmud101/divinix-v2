@@ -1,29 +1,31 @@
-
 <script lang="ts">
   import {
     createTable,
     Subscribe,
     Render,
-    createRender
+    createRender,
   } from "svelte-headless-table";
   import {
     addSortBy,
     addPagination,
     addTableFilter,
     addSelectedRows,
-    addHiddenColumns
+    addHiddenColumns,
   } from "svelte-headless-table/plugins";
   import { readable } from "svelte/store";
   import * as Table from "$lib/components/ui/table";
-  import { Button } from "$lib/components/ui/button";
+  import { Button , buttonVariants } from "$lib/components/ui/button";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
   import { cn } from "$lib/utils";
   import { Input } from "$lib/components/ui/input";
   import DataTableCheckbox from "./data-table-checkbox.svelte";
   import { ArrowUpDown, ChevronDown } from "lucide-svelte";
 
+  import * as Dialog from "$lib/components/ui/dialog";
+  import { Label } from "$lib/components/ui/label";
+
   type Subject = {
-    id: string
+    id: string;
     basic_science_subjects: string;
     applied_science_subjects: string;
     social_science_subjects: string;
@@ -39,7 +41,7 @@
     {
       id: "2",
       basic_science_subjects: "Physics",
-      applied_science_subjects: "CDE",
+      applied_science_subjects: "EEE",
       social_science_subjects: "Econ",
     },
     {
@@ -54,7 +56,7 @@
     sort: addSortBy({ disableMultiSort: true }),
     page: addPagination(),
     filter: addTableFilter({
-      fn: ({ filterValue, value }: { filterValue: string, value: string }) =>
+      fn: ({ filterValue, value }: { filterValue: string; value: string }) =>
         value.toLowerCase().includes(filterValue.toLowerCase()),
     }),
     select: addSelectedRows(),
@@ -108,7 +110,7 @@
     tableBodyAttrs,
     flatColumns,
     pluginStates,
-    rows
+    rows,
   } = table.createViewModel(columns);
 
   const { sortKeys } = pluginStates.sort;
@@ -126,18 +128,63 @@
 
   const { selectedDataIds } = pluginStates.select;
 
-  const hideableCols = ["basic_science_subjects", "applied_science_subjects", "social_science_subjects"];
-
+  const hideableCols = [
+    "basic_science_subjects",
+    "applied_science_subjects",
+    "social_science_subjects",
+  ];
 </script>
 
 <main class="font-[Rubik]">
   <div class="flex w-auto justify-center items-center min-h-[90vh]">
     <div class="min-w-[220px] w-[580px] md:w-[70%] mx-3 sm:mx-8">
-        <div class="flex gap-2 items-center justify-center"><div class="text-xs sm:text-sm text-neutral-400">Choose major subject <span class="hidden sm:inline">from the list</span> or </div> <Button variant='outline' class='sm:text-sm  text-indigo-500 text-xs'> Organize <span class="hidden sm:inline px-1"> your </span> custom Knowledge base</Button></div>
-        <hr class="my-5 border-[1.05px]">
-        
+      <div class="flex gap-2 items-center justify-center">
+        <div class="text-xs sm:text-sm text-neutral-400">
+          Choose major subject <span class="hidden sm:inline"
+            >from the list</span
+          > or
+        </div>
+
+
+        <!-- Dialog for creating custom knowledge base -->
+
+        <div>
+          
+          <Dialog.Root>
+            <Dialog.Trigger class={buttonVariants({ variant: "outline" })}>
+              <div class="sm:text-sm  text-indigo-500 text-xs">
+                Organize <span class="hidden sm:inline"> your </span> custom Knowledge
+                base</div
+              >
+            </Dialog.Trigger>
+            <Dialog.Content class="sm:max-w-[425px]">
+              <Dialog.Header>
+                <Dialog.Title>Build your own</Dialog.Title>
+                <Dialog.Description>
+                  Give it a name of your choice
+                </Dialog.Description>
+              </Dialog.Header>
+              <div class="flex flex-col gap-10">
+                <div class="">
+                  
+                  <Input id="name" value="Custom Knowledge Base" class="dark:focus:ring-emerald-500 focus:ring-emerald-500 focus:border-emerald-500  py-6" />
+                </div>
+
+              </div>
+              <Dialog.Footer>
+                <Button variant='outline' type="submit">Next</Button>
+              </Dialog.Footer>
+            </Dialog.Content>
+          </Dialog.Root>
+          
+        </div>
+
+
+
+      </div>
+      <hr class="my-5 border-[1.05px]" />
+
       <div class="flex items-center justify-center py-4">
-        
         <Input
           class="sm:max-w-sm mr-3 text-[10px] xs:text-[12px]  sm:text-sm md:text-[15px]"
           placeholder="search your subject here"
@@ -146,7 +193,11 @@
         />
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild let:builder>
-            <Button variant="outline" class="ml-auto w-min text-[10px] xs:text-[12px] sm:text-sm md:text-[15px]" builders={[builder]}>
+            <Button
+              variant="outline"
+              class="ml-auto w-min text-[10px] xs:text-[12px] sm:text-sm md:text-[15px]"
+              builders={[builder]}
+            >
               Category <ChevronDown class="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenu.Trigger>
@@ -162,7 +213,10 @@
         </DropdownMenu.Root>
       </div>
       <div class="rounded-md border">
-        <Table.Root {...$tableAttrs} class='text-center text-[10px] xs:text-[12px]  sm:text-sm md:text-[15px]'>
+        <Table.Root
+          {...$tableAttrs}
+          class="text-center text-[10px] xs:text-[12px]  sm:text-sm md:text-[15px]"
+        >
           <Table.Header>
             {#each $headerRows as headerRow}
               <Subscribe rowAttrs={headerRow.attrs()}>
@@ -182,16 +236,14 @@
                           <div class="text-center font-medium text-emerald-500">
                             <Render of={cell.render()} />
                           </div>
-
-
-                          {:else if cell.id === "applied_science_subjects text-emerald-500"}
+                        {:else if cell.id === "applied_science_subjects text-emerald-500"}
                           <div class="text-center font-medium">
-                              <Render of={cell.render()} />
-                            </div>
+                            <Render of={cell.render()} />
+                          </div>
                         {:else}
-                        <div class="text-center font-medium text-emerald-500">
-                          <Render of={cell.render()} />
-                        </div>
+                          <div class="text-center font-medium text-emerald-500">
+                            <Render of={cell.render()} />
+                          </div>
                         {/if}
                       </Table.Head>
                     </Subscribe>
@@ -209,15 +261,12 @@
                 >
                   {#each row.cells as cell (cell.id)}
                     <Subscribe attrs={cell.attrs()} let:attrs>
-                      <Table.Cell class="[&:has([role=checkbox])]:pl-3" {...attrs}>
-                        {#if cell.id === "amount"}
-                          <div class="text-right font-medium">
-                            <Render of={cell.render()} />
-                          </div>
-                        {:else if cell.id === "status"}
-
-
-                          <div class="capitalize">
+                      <Table.Cell
+                        class="[&:has([role=checkbox])]:pl-3"
+                        {...attrs}
+                      >
+                        {#if cell.id === "basic_science_subjects" || "applied_science_subjects" || "social_science_subjects"}
+                          <div class="text-center capitalize">
                             <Render of={cell.render()} />
                           </div>
                         {:else}
@@ -233,7 +282,6 @@
         </Table.Root>
       </div>
       <div class="flex items-center justify-end space-x-2 py-4">
-
         <Button
           variant="outline"
           size="sm"
