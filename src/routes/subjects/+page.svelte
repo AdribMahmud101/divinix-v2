@@ -14,22 +14,44 @@
   } from "svelte-headless-table/plugins";
   import { readable } from "svelte/store";
   import * as Table from "$lib/components/ui/table";
-  import { Button , buttonVariants } from "$lib/components/ui/button";
+  import { Button, buttonVariants } from "$lib/components/ui/button";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
-  import { cn } from "$lib/utils";
   import { Input } from "$lib/components/ui/input";
-  import DataTableCheckbox from "./data-table-checkbox.svelte";
-  import { ArrowUpDown, ChevronDown } from "lucide-svelte";
-
   import * as Dialog from "$lib/components/ui/dialog";
-  import { Label } from "$lib/components/ui/label";
-
+  import { ChevronDown } from "lucide-svelte";
+  import { cn } from "$lib/utils";
+  import * as Select from "$lib/components/ui/select";
+  import { createDir, BaseDirectory, Dir } from '@tauri-apps/api/fs';
   type Subject = {
     id: string;
     basic_science_subjects: string;
     applied_science_subjects: string;
     social_science_subjects: string;
   };
+
+
+
+  function capitalize(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+    
+  }
+
+
+
+
+//  const build_dir = async (filename: string) => {
+
+//   await createDir(filename,{ dir: BaseDirectory.AppData, recursive: true })
+
+//   console.log("Directory created Successfuly !")
+  
+//  }
+  
+ async function build_dir(filename: string) {
+
+  await createDir(filename, { dir: BaseDirectory.Home, recursive: true })
+  
+ }
 
   const data: Subject[] = [
     {
@@ -62,6 +84,7 @@
     select: addSelectedRows(),
     hide: addHiddenColumns(),
   });
+
 
   const columns = table.createColumns([
     table.column({
@@ -113,8 +136,6 @@
     rows,
   } = table.createViewModel(columns);
 
-  const { sortKeys } = pluginStates.sort;
-
   const { hiddenColumnIds } = pluginStates.hide;
   const ids = flatColumns.map((c: { id: any }) => c.id);
   let hideForId = Object.fromEntries(ids.map((id: any) => [id, true]));
@@ -123,7 +144,7 @@
     .filter(([, hide]) => !hide)
     .map(([id]) => id);
 
-  const { hasNextPage, hasPreviousPage, pageIndex } = pluginStates.page;
+  const { hasNextPage, pageIndex } = pluginStates.page;
   const { filterValue } = pluginStates.filter;
 
   const { selectedDataIds } = pluginStates.select;
@@ -133,61 +154,52 @@
     "applied_science_subjects",
     "social_science_subjects",
   ];
+
+  
+  
 </script>
 
 <main class="font-[Rubik]">
-  <div class="flex w-auto justify-center items-center min-h-[90vh]">
+  <div class="flex w-auto justify-center items-center min-h-[100vh]">
     <div class="min-w-[220px] w-[580px] md:w-[70%] mx-3 sm:mx-8">
       <div class="flex gap-2 items-center justify-center">
         <div class="text-xs sm:text-sm text-neutral-400">
-          Choose major subject <span class="hidden sm:inline"
-            >from the list</span
-          > or
+          Choose your major subject <span class="hidden sm:inline">from the list</span> or
         </div>
 
-
         <!-- Dialog for creating custom knowledge base -->
-
         <div>
-          
           <Dialog.Root>
             <Dialog.Trigger class={buttonVariants({ variant: "outline" })}>
-              <div class="sm:text-sm  text-indigo-500 text-xs">
-                Organize <span class="hidden sm:inline"> your </span> custom Knowledge
-                base</div
-              >
+              <div class="sm:text-sm text-indigo-500 text-xs">
+                Organize <span class="hidden sm:inline">your</span> custom Knowledge base
+              </div>
             </Dialog.Trigger>
             <Dialog.Content class="sm:max-w-[425px]">
               <Dialog.Header>
                 <Dialog.Title>Build your own</Dialog.Title>
-                <Dialog.Description>
-                  Give it a name of your choice
-                </Dialog.Description>
+                <Dialog.Description>Give it a name of your choice</Dialog.Description>
               </Dialog.Header>
               <div class="flex flex-col gap-10">
-                <div class="">
-                  
-                  <Input id="name" value="Custom Knowledge Base" class="dark:focus:ring-emerald-500 focus:ring-emerald-500 focus:border-emerald-500  py-6" />
+                <div>
+                  <Input id="name" value="Custom Knowledge Base" class="dark:focus:ring-emerald-500 focus:ring-emerald-500 focus:border-emerald-500 py-6" />
                 </div>
-
               </div>
               <Dialog.Footer>
                 <Button variant='outline' type="submit">Next</Button>
               </Dialog.Footer>
             </Dialog.Content>
           </Dialog.Root>
-          
         </div>
 
-
-
+        <!-- Search box -->
       </div>
       <hr class="my-5 border-[1.05px]" />
 
       <div class="flex items-center justify-center py-4">
         <Input
-          class="sm:max-w-sm mr-3 text-[10px] xs:text-[12px]  sm:text-sm md:text-[15px]"
-          placeholder="search your subject here"
+          class="sm:max-w-sm mr-3 text-[10px] xs:text-[12px] sm:text-sm md:text-[15px]"
+          placeholder="Search your subject here"
           type="text"
           bind:value={$filterValue}
         />
@@ -212,10 +224,11 @@
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       </div>
+
       <div class="rounded-md border">
         <Table.Root
           {...$tableAttrs}
-          class="text-center text-[10px] xs:text-[12px]  sm:text-sm md:text-[15px]"
+          class="text-center text-[10px] xs:text-[12px] sm:text-sm md:text-[15px]"
         >
           <Table.Header>
             {#each $headerRows as headerRow}
@@ -234,10 +247,6 @@
                       >
                         {#if cell.id === "basic_science_subjects"}
                           <div class="text-center font-medium text-emerald-500">
-                            <Render of={cell.render()} />
-                          </div>
-                        {:else if cell.id === "applied_science_subjects text-emerald-500"}
-                          <div class="text-center font-medium">
                             <Render of={cell.render()} />
                           </div>
                         {:else}
@@ -262,17 +271,39 @@
                   {#each row.cells as cell (cell.id)}
                     <Subscribe attrs={cell.attrs()} let:attrs>
                       <Table.Cell
-                        class="[&:has([role=checkbox])]:pl-3"
-                        {...attrs}
-                      >
-                        {#if cell.id === "basic_science_subjects" || "applied_science_subjects" || "social_science_subjects"}
-                          <div class="text-center capitalize">
-                            <Render of={cell.render()} />
-                          </div>
-                        {:else}
-                          <Render of={cell.render()} />
-                        {/if}
-                      </Table.Cell>
+                      
+                      
+                      
+                      {...attrs}
+                      
+                    >
+                      <div class={ $filterValue && cell.value.toLowerCase().includes($filterValue.toLowerCase()) ? 'text-yellow-500 py-1 text-center capitalize' : 'text-center capitalize'}>
+                         
+                        <Dialog.Root>
+                          <Dialog.Trigger class={buttonVariants({ variant: "outline" })}>
+                            <div class="sm:text-sm capitalize text-xs">
+                              <Render of={cell.render()} />
+                            </div>
+                          </Dialog.Trigger>
+                          <Dialog.Content class="sm:max-w-[425px]">
+                            <Dialog.Header class='flex flex-col-gap-5'>
+                              <Dialog.Title>Your choice</Dialog.Title>
+                              <Dialog.Description>Receive tailored book and source recommendations for your subject ✨.</Dialog.Description>
+                            </Dialog.Header>
+                            <div class="flex flex-col gap-10">
+                              <div>
+                                <Input id="file" value="{capitalize(cell.render())}" class="dark:focus:ring-emerald-500 focus:ring-emerald-500 focus:border-emerald-500 py-6" />
+                              </div>
+                            </div>
+                            <Dialog.Footer>
+
+                              <!-- <Button on:click={()=> build_dir("tyintbtf7")} variant='outline' type="submit">Next</Button> -->
+                              <Button on:click={()=> build_dir(capitalize(cell.render()))} variant='outline' type="submit">Next</Button>
+                            </Dialog.Footer>
+                          </Dialog.Content>
+                        </Dialog.Root>
+                      </div>
+                    </Table.Cell>
                     </Subscribe>
                   {/each}
                 </Table.Row>
@@ -281,19 +312,19 @@
           </Table.Body>
         </Table.Root>
       </div>
+
       <div class="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          on:click={() => ($pageIndex = $pageIndex - 1)}
-          disabled={!$hasPreviousPage}>Previous</Button
-        >
-        <Button
-          variant="outline"
-          size="sm"
-          disabled={!$hasNextPage}
-          on:click={() => ($pageIndex = $pageIndex + 1)}>Next</Button
-        >
+
+        
+        <a href="/">
+          <Button
+            variant='secondary'
+            size="sm"
+            on:click={() => ($pageIndex = $pageIndex - 1)}
+          >Previous</Button>
+        </a>
+
+        
       </div>
     </div>
   </div>

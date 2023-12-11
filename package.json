@@ -34,6 +34,7 @@
   "type": "module",
   "dependencies": {
     "@rgossiaux/svelte-headlessui": "^2.0.0",
+    "@tauri-apps/api": "^1.5.1",
     "bits-ui": "^0.9.9",
     "clsx": "^2.0.0",
     "lucide-svelte": "^0.294.0",
